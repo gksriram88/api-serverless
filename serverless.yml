@@ -1,0 +1,64 @@
+service: api
+plugins:
+  - serverless-dynamodb-local
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs10.x
+functions:
+  create:
+    handler: api/create.handler
+    events:
+      - http:
+          path: users/createuser
+          method: put
+  read:
+    handler: api/read.handler
+    events:
+      - http:
+          path: users/getusers
+          method: get
+  update:
+    handler: api/update.handler
+    events:
+      - http:
+          path: users/updateuser
+          method: put
+  delete:
+    handler: api/delete.handler
+    events:
+      - http:
+          path: users/deleteuser
+          method: delete
+custom:
+  dynamodb:
+    start:
+      migrate: true
+    seed:
+      domain:
+        sources:
+          - table: domain-widgets
+            sources: [./domainWidgets.json]
+      test:
+        sources:
+          - table: user
+            rawsources: [./users.json]
+resources:
+  Resources:
+    user:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: users
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+          - AttributeName: email
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: email
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
