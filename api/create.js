@@ -31,7 +31,7 @@ module.exports.handler = async(event, callback) => {
 
   let response = await createItem(params);
   return {
-    statusCode: 200,
+    statusCode: 201,
     body: JSON.stringify(
       {
         message: 'Created Successfully',
