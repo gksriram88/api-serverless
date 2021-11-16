@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "aws-sdk": "^2.504.0",
+    "aws-sdk": "^2.814.0",
     "bluebird": "^3.5.5",
     "serverless-dynamodb-local": "^0.2.24",
     "serverless-offline": "^5.9.0",
